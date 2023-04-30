@@ -2,17 +2,14 @@ package atividade_1_POO;
 
 public class Cliente {
 
+	//Atributos da classe Cliente
 	private String nome;
 	private int idade;
 	private String endereco;
 	private String CPF;
 	private String RG;
 	
-	
-	public Cliente() {
-		super();
-	}
-	
+	//Método Construtor da classe Cliente - com todos os parâmetros
 	public Cliente(String nome, int idade, String endereco, String cPF, String rG) {
 		super();
 		this.nome = nome;
@@ -22,12 +19,15 @@ public class Cliente {
 		this.RG = rG;
 	}
 	
+	//Método visualizar para imprimir os dados na tela
 	public void visualizar() {
 		System.out.println("O nome do meu cliente é: " + this.getNome() + ", sua idade é: " +
 		this.getIdade() + ", seu endereço é: " + this.getEndereco() + ", seu CPF é: " + 
-		this.getCPF() + ", seu RG é: " + this.getRG());
+		this.getCPF() + ", seu RG é: " + this.getRG() + ".");
 	}
 	
+	//Método GET para ler os dados dos atributos
+	//Método SET para modificar os atributos
 	public String getNome(){
 		return this.nome;
 	}
