@@ -185,7 +185,9 @@ public class TestaConta {
 		while (!opcaoTalao.equalsIgnoreCase("N")){
 			System.out.println("Deseja solicitar um cheque? (limite: 3) [S] ou [N]: ");
 			opcaoTalao = input.next();
-			contaCorr.pedeTalao();
+			if(opcaoTalao.equalsIgnoreCase("S")) {
+				contaCorr.pedeTalao();
+			}			
 		}
 		contaCorr.visualizaMovimentos();			
 	}
