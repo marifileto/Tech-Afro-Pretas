@@ -117,11 +117,14 @@ public class TestaConta {
 			if (operacao.equalsIgnoreCase("D")) {
 				if (contaPoup.getSaldo() >= valorOperacao) {
 					contaPoup.debito(valorOperacao);
+					contaPoup.salvaMovimento("Débito - R$"+ valorOperacao);
 				}else {
 					System.out.println("\nSaldo insuficiente para esta operação.\n");
+					contaPoup.salvaMovimento("Débito - Falha, saldo insuficiente");
 				}				
 			}else if (operacao.equalsIgnoreCase("C")){
 				contaPoup.credito(valorOperacao);
+				contaPoup.salvaMovimento("Crédito - R$"+ valorOperacao);
 			}else {
 				System.out.println("\nOpção inválida.\n");
 			}
@@ -133,7 +136,7 @@ public class TestaConta {
 				break;
 			}
 		}
-		System.out.println("Foram executadas "+ contaMovimentoPoup + " movimentações.\n");
+		contaPoup.visualizaMovimentos();
 	}
 	
 	
@@ -160,11 +163,14 @@ public class TestaConta {
 			if (operacao.equalsIgnoreCase("D")) {
 				if (contaCorr.getSaldo() >= valorOperacao) {
 					contaCorr.debito(valorOperacao);
+					contaCorr.salvaMovimento("Débito - R$"+ valorOperacao);
 				}else {
 					System.out.println("\nSaldo insuficiente para esta operação.\n");
+					contaCorr.salvaMovimento("Débito - Falha, saldo insuficiente");
 				}					
 			}else if (operacao.equalsIgnoreCase("C")){
 				contaCorr.credito(valorOperacao);
+				contaCorr.salvaMovimento("Crédito - R$"+ valorOperacao);
 			}else {
 				System.out.println("\nOpção inválida.\n");
 			}
@@ -181,8 +187,7 @@ public class TestaConta {
 			opcaoTalao = input.next();
 			contaCorr.pedeTalao();
 		}
-					
-		System.out.println("Foram executadas "+ contaMovimentoCorr + " movimentações.\n");
+		contaCorr.visualizaMovimentos();			
 	}
 	
 	
@@ -207,6 +212,7 @@ public class TestaConta {
 			if (operacao.equalsIgnoreCase("D")) {
 				if (contaEsp.getSaldo() >= valorOperacao) {
 					contaEsp.debito(valorOperacao);
+					contaEsp.salvaMovimento("Débito - R$"+ valorOperacao);
 				}else {
 					if (contaEsp.temLimite(valorOperacao)) {
 						System.out.println("\nSaldo insuficiente. \nDeseja utilizar o limite do cheque especial? "
@@ -217,14 +223,17 @@ public class TestaConta {
 							limite = contaEsp.getLimite();
 							System.out.println("\nO seu limite do cheque especial atualizado é R$" 
 							+ limite);
+							contaEsp.salvaMovimento("Débito com uso do limite - R$"+ valorOperacao);
 						}
 					}else {
 						System.out.println("Valor solicitado excede o valor disponível.\n");
+						contaEsp.salvaMovimento("Débito - falha, saldo  e limite insuficientes.");
 					}	
 				}
 				
 				}else if (operacao.equalsIgnoreCase("C")){
 				contaEsp.credito(valorOperacao);
+				contaEsp.salvaMovimento("Crédito - R$"+ valorOperacao);
 			}else {
 				System.out.println("\nOpção inválida.\n");
 			}
@@ -236,8 +245,8 @@ public class TestaConta {
 				break;
 			}
 		}
-	
-		System.out.println("Foram executadas "+ contaMovimentoEsp + " movimentações.\n");
+		contaEsp.visualizaMovimentos();
+
 	}
 	public static void tela2Empresa() {
 		
@@ -258,6 +267,7 @@ public class TestaConta {
 			if (operacao.equalsIgnoreCase("D")) {
 				if (contaEmpr.getSaldo() >= valorOperacao) {
 					contaEmpr.debito(valorOperacao);
+					contaEmpr.salvaMovimento("Débito - R$"+ valorOperacao);
 				}else {
 					System.out.println("Saldo indisponível."
 							+ "\nVocê tem R$" + contaEmpr.consultaEmprestimo() +
@@ -267,11 +277,17 @@ public class TestaConta {
 					if(opcaoEmprestimo.equalsIgnoreCase("S")) {
 						System.out.println("Qual valor deseja para o seu empréstimo?: ");
 						contaEmpr.pedirEmprestimo(input.nextDouble());
+						contaEmpr.debito(valorOperacao);
+						contaEmpr.salvaMovimento("Débito com emprestimo - R$"+ valorOperacao);
+					} else if(opcaoEmprestimo.equalsIgnoreCase("N")) {
+						System.out.println("Saldo indisponível.\n");
+						contaEmpr.salvaMovimento("Débito - falha, saldo insuficientes.");
 					}
 				}
 				
 			}else if (operacao.equalsIgnoreCase("C")){
 				contaEmpr.credito(valorOperacao);
+				contaEmpr.salvaMovimento("Crédito - R$"+ valorOperacao);
 			}else {
 				System.out.println("\nOpção inválida.\n");
 			}
@@ -302,7 +318,7 @@ public class TestaConta {
 			}
 
 		}
-		System.out.println("Foram executadas "+ contaMovimentoEmp + " movimentações.\n");
+		contaEmpr.visualizaMovimentos();
 	
 	}
 	
@@ -329,6 +345,7 @@ public class TestaConta {
 			if (operacao.equalsIgnoreCase("D")) {
 				if (contaEmpr.getSaldo() >= valorOperacao) {
 					contaEstud.debito(valorOperacao);
+					contaEstud.salvaMovimento("Débito - R$"+ valorOperacao);
 				}else {
 					
 					System.out.println("Saldo indisponível."
@@ -339,11 +356,17 @@ public class TestaConta {
 					if(opcaoEmprestimo.equalsIgnoreCase("S")) {
 						System.out.println("Qual valor deseja para o seu empréstimo?: ");
 						contaEstud.usarEstudantil(input.nextDouble());
+						contaEstud.debito(valorOperacao);
+						contaEstud.salvaMovimento("Débito com emprestimo - R$"+ valorOperacao);
+					} else if(opcaoEmprestimo.equalsIgnoreCase("N")) {
+						System.out.println("Saldo indisponível.\n");
+						contaEstud.salvaMovimento("Débito - falha, saldo insuficientes.");
 					}
 				}
 				
 			}else if (operacao.equalsIgnoreCase("C")){
 				contaEstud.credito(valorOperacao);
+				contaEstud.salvaMovimento("Crédito - R$"+ valorOperacao);
 			}else {
 				System.out.println("\nOpção inválida.\n");
 			}
@@ -374,7 +397,7 @@ public class TestaConta {
 			}
 
 		}
-		System.out.println("Foram executadas "+ contaMovimentoEstud + " movimentações.\n");
+		contaEstud.visualizaMovimentos();
 
 	}
 }
